@@ -1,0 +1,610 @@
+/* ===========================================================
+   AREPITA FAST FOOD — Landing Page
+   Design tokens
+   =========================================================== */
+:root {
+  --black:        #0a0908;
+  --black-soft:   #131210;
+  --panel:        #1a1917;
+  --panel-edge:   #262420;
+
+  /* Paleta bandera de Venezuela */
+  --yellow:       #FCD116;
+  --yellow-soft:  #FFE270;
+  --blue:         #00247D;
+  --blue-soft:    #2A4FB8;
+  --red:          #CF142B;
+  --red-deep:     #8F0E1E;
+
+  --text:         #F4F1E8;
+  --text-dim:     #B8B3A6;
+
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --max-width:    1400px;
+  --header-h:     78px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===========================================================
+   Reset
+   =========================================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+/* subtle vignette / texture over the whole page - tricolor glow */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 90% 55% at 15% 0%, rgba(252,209,22,0.07), transparent 60%),
+    radial-gradient(ellipse 80% 55% at 85% 15%, rgba(0,36,125,0.16), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(207,20,43,0.09), transparent 60%);
+}
+
+/* ===========================================================
+   Header
+   =========================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 9, 8, 0.82);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.site-header.scrolled {
+  background: rgba(10, 9, 8, 0.96);
+  box-shadow: 0 10px 30px -12px rgba(0,0,0,0.7);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  line-height: 1;
+}
+
+.brand-sub {
+  font-size: 0.68rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* Nav */
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+  transition: color 0.25s var(--ease);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 4px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--yellow) 0%, var(--yellow) 40%, var(--blue-soft) 40%, var(--blue-soft) 70%, var(--red) 70%, var(--red) 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--text);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+.nav-link.active {
+  color: var(--yellow);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  background: transparent;
+  border: 1px solid var(--panel-edge);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  width: 20px;
+  margin: 0 auto;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.header-stripe {
+  position: relative;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--yellow) 0%, var(--yellow) 33%, var(--blue) 33%, var(--blue) 66%, var(--red) 66%, var(--red) 100%);
+  opacity: 0.95;
+}
+
+/* eight small stars, echoing the flag's arc, centered on the blue band */
+.header-stripe::after {
+  content: "★ ★ ★ ★ ★ ★ ★ ★";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 6px;
+  letter-spacing: 3px;
+  color: var(--yellow-soft);
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* ===========================================================
+   Sections / Image frames
+   =========================================================== */
+main {
+  position: relative;
+  z-index: 2;
+}
+
+.menu-section {
+  width: 100%;
+  padding: 90px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scroll-margin-top: var(--header-h);
+}
+
+.menu-section:nth-child(even) {
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.015) 50%, transparent 100%);
+}
+
+.hero-section {
+  padding-top: 48px;
+}
+
+.section-frame {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-width);
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--panel);
+  box-shadow:
+    0 30px 60px -20px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(255,255,255,0.05);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+
+.section-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 22px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+.section-frame::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: 24px;
+  background: linear-gradient(135deg, var(--yellow), var(--red) 45%, var(--blue));
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+}
+
+.section-frame:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 40px 80px -20px rgba(0,0,0,0.85),
+    0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.section-frame:hover::after {
+  opacity: 0.55;
+}
+
+.section-frame img {
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+  background: var(--panel);
+  min-height: 200px;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Placeholder state while an assets/*.webp file hasn't been added yet */
+.section-frame img.img-missing {
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  background:
+    repeating-linear-gradient(135deg, var(--panel), var(--panel) 12px, var(--panel-edge) 12px, var(--panel-edge) 24px);
+}
+
+/* ===========================================================
+   Scroll reveal (fade up)
+   =========================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================================================
+   Contact section
+   =========================================================== */
+.contact-frame {
+  width: 100%;
+  max-width: var(--max-width);
+  border-radius: 22px;
+  padding: 56px 48px;
+  background:
+    radial-gradient(ellipse 60% 80% at 100% 0%, rgba(0,36,125,0.28), transparent 60%),
+    radial-gradient(ellipse 60% 80% at 0% 100%, rgba(207,20,43,0.2), transparent 60%),
+    var(--panel);
+  box-shadow:
+    0 30px 60px -20px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-frame::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--yellow) 0%, var(--yellow) 33%, var(--blue) 33%, var(--blue) 66%, var(--red) 66%, var(--red) 100%);
+}
+
+.contact-head {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.contact-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 8px;
+}
+
+.contact-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: 1px;
+  color: var(--text);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 44px;
+}
+
+.contact-block {
+  text-align: center;
+  padding: 28px 20px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+
+.contact-block:hover {
+  transform: translateY(-4px);
+  border-color: rgba(252,209,22,0.3);
+}
+
+.contact-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--yellow), var(--red));
+  color: var(--black);
+}
+
+.contact-icon svg { width: 26px; height: 26px; }
+
+.contact-block h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.4px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.contact-block p {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.contact-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--yellow);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.contact-link:hover {
+  color: var(--yellow-soft);
+  border-color: var(--yellow-soft);
+}
+
+.schedule-list {
+  list-style: none;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.schedule-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px dotted rgba(255,255,255,0.08);
+  color: var(--text-dim);
+}
+
+.schedule-list li:last-child { border-bottom: none; }
+
+.schedule-list b {
+  color: var(--text);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.schedule-list li.closed b {
+  color: var(--red);
+}
+
+.contact-social {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.social-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--text);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.social-btn svg { width: 22px; height: 22px; }
+
+.social-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, var(--yellow), var(--red));
+  color: var(--black);
+  border-color: transparent;
+}
+
+/* ===========================================================
+   Floating WhatsApp button
+   =========================================================== */
+.whatsapp-float {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  z-index: 95;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 18px 0 16px;
+  border-radius: 999px;
+  background: #25D366;
+  color: #0a0908;
+  box-shadow: 0 14px 32px -10px rgba(37,211,102,0.65);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.whatsapp-float svg {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.whatsapp-float::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  background: #25D366;
+  opacity: 0.55;
+  z-index: -1;
+  animation: wa-pulse 2.4s ease-out infinite;
+}
+
+@keyframes wa-pulse {
+  0%   { transform: scale(0.85); opacity: 0.55; }
+  70%  { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.whatsapp-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.whatsapp-float:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 38px -8px rgba(37,211,102,0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float::before { animation: none; }
+}
+
+/* ===========================================================
+   Footer
+   =========================================================== */
+.site-footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px 24px 48px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.footer-stripe {
+  height: 3px;
+  max-width: 240px;
+  margin: 0 auto 28px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--yellow), var(--red), var(--blue));
+}
+
+/* ===========================================================
+   Back to top
+   =========================================================== */
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 90;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--text);
+  font-size: 1.2rem;
+  font-weight: 700;
+  box-shadow: 0 12px 30px -8px rgba(0,36,125,0.7);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), background 0.25s var(--ease);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--yellow);
+  color: var(--black);
+}

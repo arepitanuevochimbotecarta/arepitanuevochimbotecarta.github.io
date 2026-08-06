@@ -1,0 +1,108 @@
+/* ===========================================================
+   RESPONSIVE
+   =========================================================== */
+
+/* ---- Tablets ---- */
+@media (max-width: 1024px) {
+  .header-inner { padding: 0 20px; }
+  .nav-link { padding: 10px 10px; font-size: 0.78rem; }
+  .menu-section { padding: 70px 20px; }
+  .section-frame { border-radius: 18px; }
+  .section-frame img { border-radius: 18px; }
+}
+
+/* ---- Mobile nav (collapsible) ---- */
+@media (max-width: 860px) {
+  .nav-toggle { display: flex; }
+
+  .main-nav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - var(--header-h));
+    overflow-y: auto;
+    background: rgba(10, 9, 8, 0.98);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transform: translateY(-12px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+  }
+
+  .main-nav.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 16px 20px;
+    gap: 0;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 14px 8px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .nav-link::after {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
+}
+
+/* ---- Contact section ---- */
+@media (max-width: 860px) {
+  .contact-frame { padding: 44px 24px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+
+/* ---- Phones ---- */
+@media (max-width: 600px) {
+  :root { --header-h: 68px; }
+
+  .brand-mark { font-size: 1.4rem; }
+  .brand-sub { font-size: 0.58rem; letter-spacing: 2px; }
+
+  .menu-section { padding: 44px 14px; }
+  .section-frame { border-radius: 14px; }
+  .section-frame img { border-radius: 14px; }
+
+  .section-frame:hover { transform: none; }
+
+  .contact-frame { padding: 36px 18px; border-radius: 16px; }
+  .contact-head { margin-bottom: 30px; }
+
+  .back-to-top {
+    width: 42px;
+    height: 42px;
+    right: 14px;
+    bottom: 14px;
+    font-size: 1.05rem;
+  }
+
+  .whatsapp-float {
+    left: 14px;
+    bottom: 14px;
+    height: 50px;
+    padding: 0 16px 0 14px;
+  }
+
+  .whatsapp-label { display: none; }
+
+  .site-footer { padding: 32px 16px 40px; font-size: 0.78rem; }
+}
+
+/* ---- Very small phones ---- */
+@media (max-width: 380px) {
+  .menu-section { padding: 32px 10px; }
+}
